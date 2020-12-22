@@ -9,5 +9,45 @@
 </head>
 <body>
 <p><h1>life is good</h1></p>
+    <script>
+        import React from "react";
+import axios from "axios";
+
+const Home = () => {
+
+    const [posts ,setPost] = React.useState([])
+
+    // ?_limit=5
+
+  React.useEffect(() => {
+    axios(`https://jsonplaceholder.typicode.com/posts`)
+      .then((res) => setPost(res.data.slice(0,10)))
+      .catch((err) => console.error(err))
+  }, []);
+
+  const postList = posts.length ? (
+      posts.map(post => (
+          <div key={post.id} className="card m-1 shadow-lg">
+            <div className="card-body">
+                <span className="card-title">{post.title}</span>
+                <p>{post.body}</p>
+            </div>
+          </div>
+      ))
+  ) : (
+      <div className="text-center">No post yet... </div>
+  )
+
+  return (
+    <div className="container mt-5">
+      <h4 className="text-center">Home</h4>
+      {postList}
+    </div>
+  );
+};
+
+export default Home;
+
+    </script>
 </body>
 </html>
